@@ -8,7 +8,7 @@ This repo provides the code for the three experiments presented in our paper:
 
 Iris A.M. Huijben, Bastiaan S. Veeling*, and Ruud J.G. van Sloun - [Deep probabilistic subsampling for task-adaptive compressed sensing](https://openreview.net/forum?id=SJeq9JBFvH)
 
-&ast;equal contribution
+* equal contribution
 
 ## How to run the code
 
