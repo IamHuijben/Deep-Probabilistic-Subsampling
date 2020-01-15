@@ -6,13 +6,21 @@ The model jointly performs a task on the subsampled signal, e.g. reconstruction 
 
 This repo provides the code for the three experiments presented in our paper:
 
-Iris A.M. Huijben, Bastiaan S. Veeling, and Ruud J.G. van Sloun - [Deep probabilistic subsampling for task-adaptive compressed sensing](https://openreview.net/forum?id=SJeq9JBFvH)
+Iris A.M. Huijben, Bastiaan S. Veeling*, and Ruud J.G. van Sloun - [Deep probabilistic subsampling for task-adaptive compressed sensing](https://openreview.net/forum?id=SJeq9JBFvH)
 
+&ast;equal contribution
 
 ## How to run the code
 
 ### Dependencies
-TODO
+In the anaconda prompt run:
+```
+conda env create -f environment.yml
+```
+and then activate the environment:
+```
+conda activate DPS
+```
 
 ### Experiments with MNIST (section 4.1) and CIFAR10 (section 4.3)
 - Run pathsetupMNIST.py and pathsetuptCIFAR10.py respectively.
@@ -38,7 +46,8 @@ Data is generated in an on-line fashion, and after training the model weights ar
 This file shows inference results on a randomly pre-generated test set (testSet.npy and testSetY.npy) and saves the results if savefigs = True.
 A pregenerated test set is used to fairly compare results among models. 
 
-## Cite
+## Licensing and citation
+#TODO: add licensing info
 
 Please cite our paper if you use this code in your own work:
 
