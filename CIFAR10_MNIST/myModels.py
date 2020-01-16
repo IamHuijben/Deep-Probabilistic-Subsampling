@@ -21,7 +21,6 @@ from keras import backend as K
 from keras.models import Model
 from keras.models import load_model, Sequential
 from keras.layers import GlobalAveragePooling2D, LeakyReLU,Dropout,Softmax, Flatten, Dense, Input, Conv2D, Reshape, Lambda, Add
-from ius.layers.layers_tied import Conv2DTranspose_tied
 from keras import regularizers
 from keras import initializers
 from keras import optimizers
