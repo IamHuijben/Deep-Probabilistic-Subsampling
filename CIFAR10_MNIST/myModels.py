@@ -391,12 +391,13 @@ def identity_output_shape(input_shape):
 # Layer that implements hard sampling in the forward pass, and soft sampling in the backwards pass using gumbel-softmax relaxation    
 class topKsampling(Layer):
     
-    def __init__(self,mux_in, mux_out, tempIncr, n_epochs, output_shape,  name=None,**kwargs):
+    def __init__(self,mux_in, mux_out, tempIncr, n_epochs, output_shape, batchPerEpoch, name=None,**kwargs):
         self.mux_in = mux_in
         self.mux_out =mux_out
         self.tempIncr = tempIncr
         self.n_epochs = n_epochs
         self.outShape = output_shape
+        self.batchPerEpoch = batchPerEpoch
         super(topKsampling, self).__init__(name=name,**kwargs) 
 
     def build(self, input_shape):
@@ -583,7 +584,7 @@ def samplingTaskModel(database, domain, input_dim, target_dim, comp, mux_out, te
             print('logits shape: ', logits.shape)   
             
             output_shape = (shape_input[0],nrSelectedSamples,mux_in)
-            samples = topKsampling(mux_in, nrSelectedSamples, tempIncr, n_epochs, output_shape, name="OneHotArgmax")([logits,input_layer])
+            samples = topKsampling(mux_in, nrSelectedSamples, tempIncr, n_epochs, output_shape, batchPerEpoch,name="OneHotArgmax")([logits,input_layer])
             print('hard samples: ', samples.shape)    
 
         Amatrix = Lambda(Amat, name="AtranA_0")(samples)
