@@ -29,7 +29,7 @@ from matplotlib.colors import ListedColormap
 
 
 class weights_callback(keras.callbacks.Callback):
-    def __init__(self, outputPerNepochs, outputLastNepochs, mux_out, tempIncr, domain, DPSsamp,Bahadir, folds, x_test,savedir,reconVSclassif):
+    def __init__(self, outputPerNepochs, outputLastNepochs, mux_out, tempIncr, domain, DPSsamp,topk,Bahadir, folds, x_test,savedir,reconVSclassif):
         self.outputPerNepochs = outputPerNepochs
         self.mux_out = mux_out
         self.epoch = 0
@@ -56,12 +56,13 @@ class weights_callback(keras.callbacks.Callback):
         self.myCmap = ListedColormap(newcolors)
               
         
+        if topk: #in case of top-k sampling
+            self.aspect = 10
+        else:
+            self.aspect = 'equal'
+        
     def on_train_begin(self, logs={}):
 
-        if self.mux_out == 1: #in case of top-k sampling
-            aspect = 2
-        else:
-            aspect = 'equal'
         if self.mux_out < (self.shape[1]*self.shape[2]): #In case of subsampling
             if not self.Bahadir:
                 self.modelHidden =  Model(inputs = self.model.input, outputs = self.model.get_layer("CreateSampleMatrix").output)
@@ -75,19 +76,20 @@ class weights_callback(keras.callbacks.Callback):
                     unnormDist = np.exp(dist)
                     dist = np.transpose(np.transpose(unnormDist) / np.sum(unnormDist,1))
                     
-                    plt.figure()
+                    plt.figure(figsize=(8,8))
                     plt.gcf().clear()
-                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=aspect)
+                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=self.aspect)
                     plt.xlabel('Initial Fourier coefficients', fontsize=14)
                     plt.ylabel('Selected Fourier coefficients', fontsize=14)
-                    plt.colorbar()
+                    plt.yticks([])
+                    plt.colorbar(shrink=0.2)
                     plt.title('Initial distributions on Fourier coefficients',fontsize=14)
                     
                     
                 else:
-                    plt.figure()
+                    plt.figure(figsize=(10,10))
                     plt.gcf().clear()
-                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=aspect)
+                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect='equal')
                     plt.xticks(fontsize=self.fontsize)
                     plt.yticks(fontsize=self.fontsize)                     
                     plt.xlabel('X', fontsize=14)
@@ -99,15 +101,7 @@ class weights_callback(keras.callbacks.Callback):
                     plt.savefig(self.savedir+'\hardSamples.svg',bbox_inches='tight')
                     plt.pause(.1)
                     
-                    #Also save a version without labels
-                    plt.figure()
-                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=aspect)
-                    plt.xticks(fontsize=self.fontsize)
-                    plt.yticks(fontsize=self.fontsize)                     
-                    plt.savefig(self.savedir+'\hardSamplesWithoutLabels.png',bbox_inches='tight')
-                    plt.savefig(self.savedir+'\hardSamplesWithoutLabels.svg',bbox_inches='tight')
-                    plt.pause(.1)
-                    
+
             if self.Bahadir: #Bahadir method
                 self.SamplingMask =  Model(inputs = self.model.input, outputs = self.model.get_layer("sampled_mask").output)
 
@@ -122,15 +116,12 @@ class weights_callback(keras.callbacks.Callback):
 
 
     def on_epoch_end(self, epoch, logs={}):
-        
-        if self.mux_out == 1: #in case of top-k sampling
-            aspect = 2
-        else:
-            aspect = 'equal'
+
         if (epoch+1) % self.outputPerNepochs == 0 or (epoch+1) > (self.n_epochs-self.outputLastNepochs):       
 
             print('====================================================')
             
+            # In case of subsampling factor > 1
             if self.mux_out < (self.x_test.shape[1]*self.x_test.shape[2]) and not self.Bahadir:
 
                 logits = self.modelHidden.predict_on_batch(tf.zeros((1)))
@@ -143,7 +134,7 @@ class weights_callback(keras.callbacks.Callback):
                     normDist = np.transpose(np.transpose(unnormDist) / np.sum(unnormDist,1))
                     
                     plt.figure()
-                    plt.imshow(normDist,cmap=self.myCmap,interpolation='nearest',aspect=aspect)
+                    plt.imshow(normDist,cmap=self.myCmap,interpolation='nearest',aspect=self.aspect)
                     plt.xlabel('Initial Fourier coefficients', fontsize=self.fontsize)
                     plt.ylabel('Selected Fourier coefficients', fontsize=self.fontsize)
                     plt.colorbar()
@@ -196,7 +187,7 @@ class weights_callback(keras.callbacks.Callback):
 
                 plt.figure()
                 if self.domain == 'Fourier':
-                    plt.imshow(hardSample[...,0],cmap=self.myCmap,interpolation='nearest',aspect='equal')
+                    plt.imshow(hardSample[...,0],cmap=self.myCmap,interpolation='nearest',aspect=self.aspect)
                 else:
                     plt.imshow(hardSample[...,0],cmap=self.myCmap,interpolation='nearest',aspect='equal')
                 plt.xlabel('X', fontsize=self.fontsize)
@@ -210,14 +201,6 @@ class weights_callback(keras.callbacks.Callback):
                     plt.savefig(self.savedir+'\hardSamples.png',bbox_inches='tight')
                     plt.savefig(self.savedir+'\hardSamples.svg',bbox_inches='tight')
                     plt.pause(.1)
-                    
-                    #Also save a version without labels
-                    plt.figure()
-                    plt.imshow(hardSample[...,0],cmap=self.myCmap,interpolation='nearest',aspect='equal')
-                    plt.xticks(fontsize=self.fontsize)
-                    plt.yticks(fontsize=self.fontsize)             
-                    plt.savefig(self.savedir+'\hardSamplesWithoutLabels.png',bbox_inches='tight')
-                    plt.savefig(self.savedir+'\hardSamplesWithoutLabels.svg',bbox_inches='tight')
                     
                 plt.pause(.1) 
 #            
