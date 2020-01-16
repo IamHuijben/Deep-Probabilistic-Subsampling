@@ -23,8 +23,6 @@ conda activate DPS
 ```
 
 ### Experiments with MNIST (section 4.1) and CIFAR10 (section 4.3)
-- Run pathsetupMNIST.py and pathsetuptCIFAR10.py respectively.
-
 - Run presaveMNISt.py and presaveCIFAR10.py respectively.
 
 - Run main_MNIST.py or main_CIFAR10.py to run one of the two experiments. 
