@@ -187,7 +187,7 @@ else:
         sampletype = 'unknown'
         
     
-versionName = database+"_"+sampletype+"_"+reconVSclassif+"_{}_fact{}_lr{}_EM_{}-{}-{}-{}_patience10_cooldown20".format(domain,comp, learningrate, startEM, endEM, startEpochEM, endEpochEM)
+versionName = database+"_"+sampletype+"_"+reconVSclassif+"_{}_fact{}_lr{}_EM_{}-{}-{}-{}".format(domain,comp, learningrate, startEM, endEM, startEpochEM, endEpochEM)
 
 if gumbelTopK:
     versionName = versionName+"_topK"

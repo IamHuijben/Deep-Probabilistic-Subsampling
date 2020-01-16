@@ -156,7 +156,7 @@ else:
     else:
         sampletype = 'unknown'
         
-versionName = database+"_"+sampletype+"_proxgrad_folds{}_convs{}_fact{}_lrMult{}_lr{}_EM_{}-{}-{}-{}_patience10_cooldown20".format(folds,n_convs,comp,subSampLrMult, learningrate, startEM, endEM, startEpochEM, endEpochEM)
+versionName = database+"_"+sampletype+"_proxgrad_folds{}_convs{}_fact{}_lrMult{}_lr{}_EM_{}-{}-{}-{}".format(folds,n_convs,comp,subSampLrMult, learningrate, startEM, endEM, startEpochEM, endEpochEM)
 
 if gumbelTopK:
     versionName = versionName+"_topK"

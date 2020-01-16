@@ -58,7 +58,10 @@ class weights_callback(keras.callbacks.Callback):
         
     def on_train_begin(self, logs={}):
 
-
+        if self.mux_out == 1: #in case of top-k sampling
+            aspect = 2
+        else:
+            aspect = 'equal'
         if self.mux_out < (self.shape[1]*self.shape[2]): #In case of subsampling
             if not self.Bahadir:
                 self.modelHidden =  Model(inputs = self.model.input, outputs = self.model.get_layer("CreateSampleMatrix").output)
@@ -66,7 +69,6 @@ class weights_callback(keras.callbacks.Callback):
 
                 # Plot the initial distributions, either trained (if self.DPSsamp is true) or fixed
                 if self.DPSsamp:
-                    self.modelHidden1 =  Model(inputs = self.model.input, outputs = self.model.get_layer("SoftSampling").output)
                     self.modelHidden2 =  Model(inputs = self.model.input, outputs = self.model.get_layer("OneHotArgmax").output)
                     
                     #Plot the initial weight distribution
@@ -75,7 +77,7 @@ class weights_callback(keras.callbacks.Callback):
                     
                     plt.figure()
                     plt.gcf().clear()
-                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect='equal')
+                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=aspect)
                     plt.xlabel('Initial Fourier coefficients', fontsize=14)
                     plt.ylabel('Selected Fourier coefficients', fontsize=14)
                     plt.colorbar()
@@ -85,7 +87,7 @@ class weights_callback(keras.callbacks.Callback):
                 else:
                     plt.figure()
                     plt.gcf().clear()
-                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect='equal')
+                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=aspect)
                     plt.xticks(fontsize=self.fontsize)
                     plt.yticks(fontsize=self.fontsize)                     
                     plt.xlabel('X', fontsize=14)
@@ -99,7 +101,7 @@ class weights_callback(keras.callbacks.Callback):
                     
                     #Also save a version without labels
                     plt.figure()
-                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect='equal')
+                    plt.imshow(dist,cmap=self.myCmap,interpolation='nearest', aspect=aspect)
                     plt.xticks(fontsize=self.fontsize)
                     plt.yticks(fontsize=self.fontsize)                     
                     plt.savefig(self.savedir+'\hardSamplesWithoutLabels.png',bbox_inches='tight')
@@ -121,7 +123,10 @@ class weights_callback(keras.callbacks.Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         
-        aspect = 'auto'
+        if self.mux_out == 1: #in case of top-k sampling
+            aspect = 2
+        else:
+            aspect = 'equal'
         if (epoch+1) % self.outputPerNepochs == 0 or (epoch+1) > (self.n_epochs-self.outputLastNepochs):       
 
             print('====================================================')
@@ -149,19 +154,6 @@ class weights_callback(keras.callbacks.Callback):
                         plt.savefig(self.savedir+'\distributions.svg',bbox_inches='tight')
                     plt.pause(.1) 
                       
-                    softSamples = self.modelHidden1.predict_on_batch(tf.zeros((1,self.shape[1],self.shape[2],self.shape[3])))
-                    softSample = softSamples[0,:,:] #Plot the first of the batch only
-                    plt.figure()
-                    plt.imshow(softSample,cmap=self.myCmap,interpolation='nearest',aspect=aspect)
-                    plt.xlabel('Initial Fourier coefficients', fontsize=14)
-                    plt.ylabel('Selected Fourier coefficients', fontsize=11)
-                    plt.colorbar()
-                    plt.title('Soft samples',fontsize=self.fontsize)
-                    
-                    if self.savedir and (epoch+1) == self.n_epochs:
-                        plt.savefig(self.savedir+'\softSamples.png',bbox_inches='tight')
-                        plt.savefig(self.savedir+'\softSamples.svg',bbox_inches='tight')
-                    plt.pause(.1) 
     
                     #Plot the hard samples
                     samples = self.modelHidden2.predict_on_batch(tf.zeros((1,self.shape[1],self.shape[2],self.shape[3])))[0]
