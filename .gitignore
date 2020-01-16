@@ -1,0 +1,6 @@
+.spyproject/
+CIFAR10_MNIST/CIFAR10data/
+CIFAR10_MNIST/MNISTdata/
+CIFAR10_MNIST/__pycache__/
+LinesAndCircles/__pycache__/
+Bahadir2019/__pycache__/
