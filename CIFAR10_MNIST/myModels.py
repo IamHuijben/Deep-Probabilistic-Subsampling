@@ -13,7 +13,6 @@
 ==============================================================================
 """
 import sys, os
-sys.path.insert(0, 'E:\\Iris Huijben\\MyGraduationFiles\\ius_AI_tools')
 from pathsetupCIFAR10 import in_dir
 
 import numpy as np
@@ -30,7 +29,6 @@ import temperatureUpdate
 import tensorflow as tf
 from keras.engine.topology import Layer
 from Bahadir2019 import layers
-
 
 # Define custom layers and regularizers
 #######################################################################

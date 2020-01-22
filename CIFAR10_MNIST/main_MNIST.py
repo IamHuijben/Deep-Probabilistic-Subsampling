@@ -213,7 +213,7 @@ EntropyMult_cb = LambdaCallback(on_epoch_end=lambda epoch, log: IncrEntropyMult(
 # Define callbacks
 callbacks = [
         trainingUpdate_callback.training_callback(outputPerNepochs = 1, outputLastNepochs=(1,n_epochs), savedir=savedir, reconVSclassif=reconVSclassif),
-        trainableParams_callback.weights_callback(outputPerNepochs = 1, outputLastNepochs = (1,n_epochs), mux_out = mux_out, tempIncr=tempIncr, domain = domain, DPSsamp=DPSsamp, Bahadir=Bahadir, folds=folds, x_test=x_val,savedir=savedir,reconVSclassif = reconVSclassif),
+        trainableParams_callback.weights_callback(outputPerNepochs = 1, outputLastNepochs = (1,n_epochs), mux_out = mux_out, tempIncr=tempIncr, domain = domain, DPSsamp=DPSsamp, topk=gumbelTopK, Bahadir=Bahadir, folds=folds, x_test=x_val,savedir=savedir,reconVSclassif = reconVSclassif),
         ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=10, min_lr=1e-7, cooldown=20,verbose=1),
         ModelCheckpoint(os.path.join(savedir, 'weights-{epoch:02d}-{val_loss:.2f}.hdf5'), monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True, mode='auto', period=1),
         EntropyMult_cb

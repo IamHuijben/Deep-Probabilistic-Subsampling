@@ -12,7 +12,7 @@
 ==============================================================================
 """
 
-# File to load cifar10 data and split into train,validate and test set
+# File to load MNIST data and split into train,validate and test set
 
 from keras.datasets import mnist
 from sklearn.model_selection import train_test_split
