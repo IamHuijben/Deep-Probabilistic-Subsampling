@@ -56,11 +56,10 @@ class entropy_reg(tf.keras.regularizers.Regularizer):
 
 # Create the trainable logits matrix
 class CreateSampleMatrix(Layer):
-    def __init__(self,mux_in,mux_out,entropyMult,subSampLrMult,name=None,**kwargs):
+    def __init__(self,mux_in,mux_out,entropyMult,name=None,**kwargs):
         self.mux_in = mux_in
         self.mux_out = mux_out
         self.entropyMult = entropyMult
-        self.subSampLrMult = subSampLrMult
         super(CreateSampleMatrix, self).__init__(name=name,**kwargs)
 
     def build(self, input_shape):
@@ -86,10 +85,9 @@ class CreateSampleMatrix(Layer):
     
 # Create the trainable logits matrix
 class CreateSampleMatrix_topK(Layer):
-    def __init__(self,mux_in,mux_out,subSampLrMult,name=None,**kwargs):
+    def __init__(self,mux_in,mux_out,name=None,**kwargs):
         self.mux_in = mux_in
         self.mux_out = mux_out
-        self.subSampLrMult = subSampLrMult
         super(CreateSampleMatrix_topK, self).__init__(name=name,**kwargs)
 
     def build(self, input_shape):
@@ -535,7 +533,7 @@ class fft2D(Layer):
 
 ######################################################################
 
-def samplingTaskModel(database, domain, input_dim, target_dim, comp, mux_out, tempIncr, entropyMult, subSampLrMult, DPSsamp, Bahadir, uniform, circle, num_classes, folds, reconVSclassif, n_epochs, batchPerEpoch, share_prox_weights = False, OneOverLmult=1, n_convs=3,learningrate=0.0001,type_recon=None,gumbelTopK=False):
+def samplingTaskModel(database, domain, input_dim, target_dim, comp, mux_out, tempIncr, entropyMult, DPSsamp, Bahadir, uniform, circle, num_classes, folds, reconVSclassif, n_epochs, batchPerEpoch, share_prox_weights = False, OneOverLmult=1, n_convs=3,learningrate=0.0001,type_recon=None,gumbelTopK=False):
 
 
     mux_in = input_dim[0]*input_dim[1]
@@ -566,7 +564,7 @@ def samplingTaskModel(database, domain, input_dim, target_dim, comp, mux_out, te
         mux_in = shape_input[1]*shape_input[2]
 
         if gumbelTopK == False:        
-            logits = CreateSampleMatrix(mux_out=mux_out,mux_in=mux_in, entropyMult=entropyMult, subSampLrMult=subSampLrMult, name="CreateSampleMatrix")(input_layer)              
+            logits = CreateSampleMatrix(mux_out=mux_out,mux_in=mux_in, entropyMult=entropyMult, name="CreateSampleMatrix")(input_layer)              
             print('logits shape: ', logits.shape)   
             
             maskedLogits = Lambda(MaskingLogits,name="MaskingLogits",output_shape=MaskingLogits_output_shape)([logits,input_layer])
@@ -578,7 +576,7 @@ def samplingTaskModel(database, domain, input_dim, target_dim, comp, mux_out, te
             samples = Lambda(hardSampling,name="OneHotArgmax",output_shape=identity_output_shape)(samples)
             print('hard samples shape:' , samples.shape)
         else:
-            logits = CreateSampleMatrix_topK(mux_out=1,mux_in=mux_in, subSampLrMult=subSampLrMult, name="CreateSampleMatrix")(input_layer)              
+            logits = CreateSampleMatrix_topK(mux_out=1,mux_in=mux_in, name="CreateSampleMatrix")(input_layer)              
             print('logits shape: ', logits.shape)   
             
             output_shape = (shape_input[0],nrSelectedSamples,mux_in)

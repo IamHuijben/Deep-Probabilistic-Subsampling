@@ -103,7 +103,6 @@ generator = myModels.samplingTaskModel(
                             mux_out,
                             tempIncr,
                             entropyMult,
-                            subSampLrMult,
                             DPSsamp,
                             Bahadir,
                             uniform,

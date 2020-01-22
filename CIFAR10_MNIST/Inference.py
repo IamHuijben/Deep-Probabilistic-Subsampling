@@ -143,7 +143,6 @@ if not Bahadir:
                                 mux_out,
                                 tempIncr,
                                 [],
-                                subSampLrMult,
                                 DPSsamp,
                                 Bahadir,
                                 uniform,
