@@ -1,10 +1,30 @@
 """
+This code learns to sub-sample MNIST images either in the image or Fourier domain and reconstructs or classifies them.
+Copyright (C) 2020  Iris Huijben
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+For questions, you can contact us at: i.a.m.huijben@tue.nl
+"""
+
+"""
 =============================================================================
     Eindhoven University of Technology
 ==============================================================================
 
     Source Name   : main_MNIST.py
-                    This main file calls the model to subsample MNIST images either in the Fourier or image domain and reconstruct/classify them.
+                    This main file calls the model to sub-sample MNIST images either in the Fourier or image domain and reconstruct/classify them.
                     
     Author        : Iris Huijben
     Date          : 27/07/2019
