@@ -44,8 +44,7 @@ Data is generated in an on-line fashion, and after training the model weights ar
 This file shows inference results on a randomly pre-generated test set (testSet.npy and testSetY.npy) and saves the results if savefigs = True.
 A pregenerated test set is used to fairly compare results among models. 
 
-## Licensing and citation
-#TODO: add licensing info
+## Citation
 
 Please cite our paper if you use this code in your own work:
 
