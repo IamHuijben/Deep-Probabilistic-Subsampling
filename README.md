@@ -13,7 +13,8 @@ Iris A.M. Huijben, Bastiaan S. Veeling*, and Ruud J.G. van Sloun - [Deep probabi
 ## How to run the code
 
 ### Dependencies
-The [anaconda](https://www.anaconda.com/) package. 
+Download the [anaconda](https://www.anaconda.com/) package. 
+
 In the anaconda prompt run:
 ```
 conda env create -f environment.yml
