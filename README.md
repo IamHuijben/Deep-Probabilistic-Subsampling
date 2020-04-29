@@ -12,6 +12,9 @@ Iris A.M. Huijben, Bastiaan S. Veeling*, and Ruud J.G. van Sloun - [Deep probabi
 
 ## How to run the code
 
+The full code was written in tensorflow, so the following instructions belong to the tensorflow code.
+However, recently we added a Pytorch folder with the DPS-topk implementation in pytorch. This is not a full model implementation, but should facilitate Pytorch users with implementation the full model in Pytorch. 
+
 ### Dependencies
 Download the [anaconda](https://www.anaconda.com/) package. 
 
