@@ -38,7 +38,7 @@ class DPS(nn.Module):
               if self.training == True:
                   noise = self.gumbel.sample((self.batch_size,self.mux_in,1)).repeat(1,1,self.mux_out).to(self.device)
               else:
-                  noise = 0#self.gumbel.sample((self.batch_size,self.mux_in,1)).repeat(1,1,self.mux_out).to(self.device)
+                  noise = 0
               
               perturbed_logits = logits.unsqueeze(2).repeat(1,1,self.mux_out) + noise
               
