@@ -1,6 +1,0 @@
-ADPS_26lines_0seed.tar filter=lfs diff=lfs merge=lfs -text
-ADPS_26lines_1seed.tar filter=lfs diff=lfs merge=lfs -text
-ADPS_26lines_2seed.tar filter=lfs diff=lfs merge=lfs -text
-ADPS_26lines_3seed.tar filter=lfs diff=lfs merge=lfs -text
-ADPS_26lines_4seed.tar filter=lfs diff=lfs merge=lfs -text
-ADPS_16lines_0seed_Pineda.tar filter=lfs diff=lfs merge=lfs -text
