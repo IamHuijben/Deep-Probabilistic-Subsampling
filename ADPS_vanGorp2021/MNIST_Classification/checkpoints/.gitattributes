@@ -1,0 +1,16 @@
+ADPS_1percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_2percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_3percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_4percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_5percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_6percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_7percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+ADPS_8percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_1percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_2percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_3percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_4percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_5percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_6percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_7percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
+DPS_8percent_0seed.tar filter=lfs diff=lfs merge=lfs -text
